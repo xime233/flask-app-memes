@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Herramientas Agrícolas</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1b0d53;
+      color: white;
+      text-align: center;
+    }
+
+    header {
+      padding: 30px 20px 10px;
+    }
+
+    .logo-cat {
+      width: 600px;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin: 10px 0 0;
+      font-weight: bold;
+    }
+
+    h2 {
+      font-size: 1.5em;
+      color: #c0c0c0;
+      margin: 0 0 20px;
+    }
+
+    .tools {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px 20px;
+    }
+
+    .tool {
+      background: white;
+      color: #1b0d53;
+      border-radius: 10px;
+      padding: 30px 20px;
+      width: 220px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: transform 0.2s ease;
+      text-decoration: none;
+    }
+
+    .tool:hover {
+      transform: scale(1.05);
+    }
+
+    .tool-icon {
+      width: 60px;
+      height: 60px;
+      margin-bottom: 10px;
+      background: #f44336;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .tool-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      margin-top: 10px;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.8em;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+<img src="{{ url_for('static', filename='cat_fire_laptop.png') }}" alt="Gato programador" class="logo-cat">
+    
+  </header>
+
+  <section class="tools">
+    <a href="/calculadora" class="tool">
+      <div class="tool-icon"></div>
+      <div class="tool-title">Calculadora Hectáreas</div>
+    </a>
+<a href="/archivo-oc" class="tool">
+      <div class="tool-icon"></div>
+      <div class="tool-title">Archivo OC</div>
+    </a>
+    <a href="memes" class="tool">
+      <div class="tool-icon"></div>
+      <div class="tool-title">Memes</div>
+    </a>
+  </section>
+
+  <footer>
+    © 2025 Cruz Desarrollo
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculadora Agrícola</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #1b0d53;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .formulario {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 450px;
+            margin: auto;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            margin-top: 20px;
+            background-color: #00c041;
+            color: white;
+            padding: 12px;
+            border: none;
+            width: 100%;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #007c32;
+        }
+        .resultado {
+            margin-top: 25px;
+            font-size: 18px;
+            color: #222;
+            text-align: center;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="formulario">
+        <h1>Calculadora de Hectáreas y Plantas </h1>
+
+        <label for="modo">Modo de cálculo:</label>
+        <select id="modo" onchange="cambiarModo()">
+            <option value="hectareas">Calcular Hectáreas</option>
+            <option value="plantas">Calcular Plantas por Hectárea</option>
+        </select>
+
+        <div id="campoTotalPlantas">
+            <label for="totalPlantas">Total de plantas:</label>
+            <input type="number" id="totalPlantas" placeholder="Ej: 75648" min="1">
+        </div>
+
+        <label for="distHilera">Distancia entre hileras (m):</label>
+        <input type="number" id="distHilera" placeholder="Ej: 3.2" step="0.01" min="0.01">
+
+        <label for="distPlanta">Distancia entre plantas (m):</label>
+        <input type="number" id="distPlanta" placeholder="Ej: 1.8" step="0.01" min="0.01">
+
+        <button onclick="calcular()">Calcular</button>
+
+        <div class="resultado" id="resultado"></div>
+    </div>
+
+    <script>
+        function cambiarModo() {
+            const modo = document.getElementById("modo").value;
+            const campoTotalPlantas = document.getElementById("campoTotalPlantas");
+
+            if (modo === "plantas") {
+                campoTotalPlantas.style.display = "none";
+            } else {
+                campoTotalPlantas.style.display = "block";
+            }
+        }
+
+        function calcular() {
+            const modo = document.getElementById("modo").value;
+            const hilera = parseFloat(document.getElementById("distHilera").value);
+            const planta = parseFloat(document.getElementById("distPlanta").value);
+            const total = parseInt(document.getElementById("totalPlantas").value);
+
+            if (isNaN(hilera) || isNaN(planta) || hilera <= 0 || planta <= 0) {
+                document.getElementById("resultado").innerHTML = 
+                    '<span class="error">Ingresa distancias válidas (mayores que cero).</span>';
+                return;
+            }
+
+            const areaPorPlanta = hilera * planta; // m² por planta
+            let resultado;
+
+            if (modo === "hectareas") {
+                if (isNaN(total) || total <= 0) {
+                    document.getElementById("resultado").innerHTML = 
+                        '<span class="error">Ingresa un número válido de plantas.</span>';
+                    return;
+                }
+                const areaTotalM2 = areaPorPlanta * total;
+                const hectareas = areaTotalM2 / 10000;
+                resultado = `Se necesitan <strong>${hectareas.toFixed(2)} ha</strong> para ${total} plantas (marco: ${hilera}m x ${planta}m).`;
+            } else { // Modo "plantas por hectárea"
+                const plantasPorHectarea = Math.floor(10000 / areaPorPlanta);
+                resultado = `Cabrán aproximadamente <strong>${plantasPorHectarea}</strong> plantas por hectárea (marco: ${hilera}m x ${planta}m).`;
+            }
+
+            document.getElementById("resultado").innerHTML = resultado;
+        }
+
+        // Inicializar al cargar
+        cambiarModo();
+    </script>
+</body>
+</html>

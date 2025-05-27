@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memes del Mes</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #ff4500;
+            text-shadow: 2px 2px 4px #ccc;
+        }
+        
+        .meme-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .meme {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 15px;
+            max-width: 300px;
+        }
+        
+        .meme img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        
+        .meme-caption {
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+        }
+        
+        footer {
+            margin-top: 40px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌟 Memes del Mes 🌟</h1>
+    <p>Los mejores memes seleccionados especialmente para ti este mes</p>
+    
+    <div class="meme-container">
+       <!-- Meme 1 -->
+<div class="meme">
+    <img src="{{ url_for('static', filename='memes/meme1.png') }}" alt="Meme 1">
+    <div class="meme-caption">Cuando terminas tu proyecto a última hora</div>
+</div>
+
+<!-- Meme 2 -->
+<div class="meme">
+    <img src="{{ url_for('static', filename='memes/meme2.png') }}" alt="Meme 2">
+    <div class="meme-caption">Elegir entre estudiar o ver memes</div>
+</div>
+
+<!-- Meme 3 -->
+<div class="meme">
+    <img src="{{ url_for('static', filename='memes/meme3.png') }}" alt="Meme 3">
+    <div class="meme-caption">Programar vs. Depurar código</div>
+</div>
+
+<!-- Meme 4 -->
+<div class="meme">
+    <img src="{{ url_for('static', filename='memes/meme4.png') }}" alt="Meme 4">
+    <div class="meme-caption">Cuando alguien dice que los memes no son arte</div>
+</div>
+
+    </div>
+    
+    <footer>
+        <p>© 2025 Cruz Desarrollo</p>
+    </footer>
+</body>
+</html>
