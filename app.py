@@ -8,12 +8,16 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
+
 @app.route('/archivo-oc')
 def archivo_oc():
     return render_template('archivo-oc.html')
+
 @app.route('/calculadora')
 def calculadora():
     return render_template('calculadora.html')
@@ -34,9 +38,13 @@ def procesar():
     archivo.save(ruta_entrada)
 
     try:
-        df = pd.read_excel(ruta_entrada, engine='pyxlsb', sheet_name='Consulta')
+        # ⚠️ Leer solo columna GLOSA para ahorrar RAM
+        df = pd.read_excel(ruta_entrada, engine='pyxlsb', sheet_name='Consulta', usecols=['GLOSA'])
     except Exception as e:
         return f"❌ Error al leer el archivo: {e}"
+
+    if 'GLOSA' not in df.columns:
+        return "❌ La columna 'GLOSA' no existe en el archivo."
 
     def extraer_oc(texto):
         match = re.search(r'OC\d{8}', str(texto))
