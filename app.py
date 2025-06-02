@@ -8,7 +8,9 @@ app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-
+# Límite de archivo para evitar que Render tire error 502
+MAX_FILE_SIZE_MB = 10
+MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024
 
 @app.route('/')
 def index():
@@ -32,13 +34,17 @@ def procesar():
     if not archivo:
         return "❌ No se subió ningún archivo."
 
+    # Validación de tamaño de archivo (solo si el servidor da ese dato)
+    if archivo.content_length and archivo.content_length > MAX_FILE_SIZE:
+        return f"❌ El archivo supera los {MAX_FILE_SIZE_MB} MB permitidos."
+
     # Guardar archivo subido
     nombre_seguro = secure_filename(archivo.filename)
     ruta_entrada = os.path.join(UPLOAD_FOLDER, nombre_seguro)
     archivo.save(ruta_entrada)
 
     try:
-        # ⚠️ Leer solo columna GLOSA para ahorrar RAM
+        # Leer solo columna 'GLOSA' para ahorrar RAM
         df = pd.read_excel(ruta_entrada, engine='pyxlsb', sheet_name='Consulta', usecols=['GLOSA'])
     except Exception as e:
         return f"❌ Error al leer el archivo: {e}"
